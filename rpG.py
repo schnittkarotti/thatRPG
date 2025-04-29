@@ -1,5 +1,8 @@
 import time
 import math
+import re
+import shelve
+
 temp = 0
 
 print ("""
@@ -119,17 +122,15 @@ eimerTX = str()
 HP = 100
 hunger = 0
 stamina = 100
-maxHP = 100
-maxSTM = 100
 
-#stats:
-intelligence = 0
-power = 0
-luck = 0
-faith = 0
-wisdom = 0
-speed = 0
-charisma = 0
+stats = {
+    "strength" = 0
+    "speed" = 0
+    "endurance" = 0
+    "intelligence" = 0
+    "charisma" = 0
+    "maxHP" = 100
+}
 
 inventar = {
     "ar15" : (1, "ar", 200, 500, 2, 100, 5.56, 500),
@@ -154,6 +155,20 @@ class NPC:
 
 name = input('Name:')
 
+def save():
+    shelfFile = shelfopen('save1.txt')
+    shelfFile[inventarQa] = inventarQa
+    shelfFile[RecipesHidden] = RecipesHidden
+    shelfFile[inventar] = inventar
+    shelfFile[stats] = stats
+    shelfFile[HP] = HP
+    shelfFile[hunger] =  hunger
+    shelfFile[stamina] = stamina
+    shelfFile.close()
+    print ("saved")
+    return main()
+
+
 def main():
     T = input("mainmenu:")
     if (T == 's'):
@@ -171,6 +186,9 @@ def main():
     if (T == 'w'):
         T = 0
         return world()  #niy
+    if (T == 's'):
+        T = 0
+        return save()
 
 def inventarui():
     print (inventar.keys())
