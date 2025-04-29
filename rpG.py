@@ -220,8 +220,7 @@ def kombinieren():
         inventarQa[Z1] = inventarQa[Z1] - 1
         inventarQa[Z2] = inventarQa[Z2] - 1
         print (RecipesHidden[temp])
-        inventar[temp]
-        inventarQa[temp] = inventarQa[temp] + 1
+        inventarQa[RecipesHidden[temp]] = inventarQa[RecipesHidden[temp]] + 1
         return kombinieren()   
     if f'{temp}' not in RecipesHidden:
         print ("not valid")
