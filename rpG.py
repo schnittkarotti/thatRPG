@@ -2,6 +2,7 @@ import time
 import math
 import re
 import shelve
+import json
 
 temp = 0
 
@@ -118,10 +119,11 @@ apfelTX = str("""
 eimerTX = str()
 
 
-#status:
-HP = 100
-hunger = 0
-stamina = 100
+status = {
+    "HP" = 100,
+    "hunger" = 0,
+    "stamina" = 100
+}
 
 stats = {
     "strength" : 0,
@@ -136,6 +138,7 @@ inventar = {
     "ar15" : (1, "ar", 200, 500, 2, 100, 5.56, 500),
     "stick" : (20)
 }
+
 inventarQa = {
     "ar15" : 1,
     "stick" : 2,
@@ -153,20 +156,27 @@ class NPC:
         NPC.like = like
         NPC.power = power
 
+load = input("load?(y/n):")
+if load == "y":
+    shelfFile = shelve.open(save1)
+    
+load = None
+
 name = input('Name:')
 
 def save():
-    shelfFile = shelve.open('save1.txt')
-    shelfFile["inventarQa"] = inventarQa
-    shelfFile["RecipesHidden"] = RecipesHidden
-    shelfFile["inventar"] = inventar
-    shelfFile["stats"] = stats
-    shelfFile["HP"] = HP
-    shelfFile["hunger"] =  hunger
-    shelfFile["stamina"] = stamina
-    shelfFile.close()
-    print ("saved")
-    return main()
+    data = {
+        "status": status,
+        "inventar": inventar,
+        "inventarQa": inventarQa,
+        "stats": stats,
+    }
+    with open ("save.json", "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+    print("gespeichert")
+    
+    
+        return main()
 
 
 def main():
