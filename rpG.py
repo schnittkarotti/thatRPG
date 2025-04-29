@@ -124,12 +124,12 @@ hunger = 0
 stamina = 100
 
 stats = {
-    "strength" = 0
-    "speed" = 0
-    "endurance" = 0
-    "intelligence" = 0
-    "charisma" = 0
-    "maxHP" = 100
+    "strength" : 0,
+    "speed" : 0,
+    "endurance" : 0,
+    "intelligence" : 0,
+    "charisma" : 0,
+    "maxHP" : 100
 }
 
 inventar = {
@@ -156,7 +156,7 @@ class NPC:
 name = input('Name:')
 
 def save():
-    shelfFile = shelfopen('save1.txt')
+    shelfFile = shelve.open('save1.txt')
     shelfFile[inventarQa] = inventarQa
     shelfFile[RecipesHidden] = RecipesHidden
     shelfFile[inventar] = inventar
@@ -171,9 +171,6 @@ def save():
 
 def main():
     T = input("mainmenu:")
-    if (T == 's'):
-        T = 0
-        return safe()   #niy
     if (T == 'i'):
         T = 0
         return inventarui()
