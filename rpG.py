@@ -157,13 +157,13 @@ name = input('Name:')
 
 def save():
     shelfFile = shelve.open('save1.txt')
-    shelfFile[inventarQa] = inventarQa
-    shelfFile[RecipesHidden] = RecipesHidden
-    shelfFile[inventar] = inventar
-    shelfFile[stats] = stats
-    shelfFile[HP] = HP
-    shelfFile[hunger] =  hunger
-    shelfFile[stamina] = stamina
+    shelfFile["inventarQa"] = inventarQa
+    shelfFile["RecipesHidden"] = RecipesHidden
+    shelfFile["inventar"] = inventar
+    shelfFile["stats"] = stats
+    shelfFile["HP"] = HP
+    shelfFile["hunger"] =  hunger
+    shelfFile["stamina"] = stamina
     shelfFile.close()
     print ("saved")
     return main()
