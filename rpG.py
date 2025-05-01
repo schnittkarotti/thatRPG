@@ -159,10 +159,13 @@ class NPC:
 load = input("load?(y/n):")
 if load == "y":
     shelfFile = shelve.open(save1)
-    
-load = None
+    load = None
 
 name = input('Name:')
+
+def load():
+    shelfFile = shelve.open(save1)
+    load = None
 
 def save():
     data = {
@@ -182,20 +185,23 @@ def save():
 def main():
     T = input("mainmenu:")
     if (T == 'i'):
-        T = 0
+        T = None
         return inventarui()
     if (T == 'm'):
-        T = 0
+        T = None
         return MAP()    #niy
     if (T == 'c'):
-        T = 0
+        T = None
         return combat() #niy
     if (T == 'w'):
-        T = 0
+        T = None
         return world()  #niy
     if (T == 's'):
-        T = 0
+        T = None
         return save()
+    if (T == 'l'):
+        T = None
+        return load()
 
 def inventarui():
     print (inventar.keys())
