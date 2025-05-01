@@ -156,16 +156,21 @@ class NPC:
         NPC.like = like
         NPC.power = power
 
-load = input("load?(y/n):")
-if load == "y":
-    shelfFile = shelve.open(save1)
-    load = None
-
 name = input('Name:')
 
 def load():
-    shelfFile = shelve.open(save1)
-    load = None
+    try:
+        with open("save.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+        status = data["status"]
+        inventar = data["inventar"]
+        inventarQa = data["inventaQa"]
+        stats = data["stats"]
+        print ("geladen")
+        return status, inventar, inventarQa, stats, main()
+    except FileNotFoundError:
+        print("keine File")
+        return main()
 
 def save():
     data = {
@@ -177,7 +182,6 @@ def save():
     with open ("save.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
     print("gespeichert")
-    
     
     return main()
 
