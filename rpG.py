@@ -120,9 +120,9 @@ eimerTX = str()
 
 
 status = {
-    "HP" = 100,
-    "hunger" = 0,
-    "stamina" = 100
+    "gesundheit" : 100,
+    "movementkram" : 100,
+    "hunger" : 0
 }
 
 stats = {
@@ -176,7 +176,7 @@ def save():
     print("gespeichert")
     
     
-        return main()
+    return main()
 
 
 def main():
