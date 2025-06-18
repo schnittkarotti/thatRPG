@@ -172,7 +172,7 @@ def load():
         print("keine File")
         return main()
 
-def save():
+def save(status, inventar, inventarQa, stats):
     data = {
         "status": status,
         "inventar": inventar,
@@ -184,7 +184,6 @@ def save():
     print("gespeichert")
     
     return main()
-
 
 def main():
     T = input("mainmenu:")
