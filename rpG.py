@@ -172,18 +172,163 @@ def load():
         print("keine File")
         return main()
 
+import json
+import os
+
 def save(status, inventar, inventarQa, stats):
-    data = {
-        "status": status,
-        "inventar": inventar,
-        "inventarQa": inventarQa,
-        "stats": stats,
-    }
-    with open ("save.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
-    print("gespeichert")
+    """
+    Speichert die Spieldaten sicher in save.json
+    """
+    try:
+        # Daten vorbereiten
+        data = {
+            "status": status,
+            "inventar": inventar,
+            "inventarQa": inventarQa,
+            "stats": stats,
+        }
+        
+        # Backup der alten Datei falls vorhanden
+        if os.path.exists("save.json"):
+            try:
+                os.rename("save.json", "save_backup.json")
+            except:
+                pass  # Backup fehlgeschlagen, aber weitermachen
+        
+        # Speichern mit absoluten Pfad für Sicherheit
+        save_path = os.path.join(os.getcwd(), "save.json")
+        
+        with open(save_path, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+        
+        # Erfolgreich gespeichert - Backup löschen
+        if os.path.exists("save_backup.json"):
+            try:
+                os.remove("save_backup.json")
+            except:
+                pass
+        
+        print("✓ Erfolgreich gespeichert!")
+        print(f"Datei: {save_path}")
+        
+        # Verifikation
+        if os.path.exists(save_path) and os.path.getsize(save_path) > 0:
+            print(f"✓ Datei erstellt ({os.path.getsize(save_path)} Bytes)")
+        else:
+            print("⚠ Warnung: Datei scheint leer oder nicht erstellt zu sein")
+            
+    except PermissionError:
+        print("❌ Fehler: Keine Berechtigung zum Schreiben in diesem Ordner")
+        print(f"Aktueller Ordner: {os.getcwd()}")
+        
+        # Alternativer Speicherort versuchen
+        try:
+            alt_path = os.path.join(os.path.expanduser("~"), "save.json")
+            with open(alt_path, "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=4)
+            print(f"✓ Alternative gespeichert in: {alt_path}")
+        except:
+            print("❌ Auch alternativer Speicherort fehlgeschlagen")
+            
+    except json.JSONEncoder.JSONError as e:
+        print(f"❌ JSON-Fehler: Die Daten können nicht als JSON gespeichert werden")
+        print(f"Fehler: {e}")
+        print("Prüfe ob alle Variablen JSON-serialisierbar sind (keine Funktionen, Klassen etc.)")
+        
+    except Exception as e:
+        print(f"❌ Unerwarteter Fehler beim Speichern: {e}")
+        
+        # Backup wiederherstellen falls vorhanden
+        if os.path.exists("save_backup.json"):
+            try:
+                os.rename("save_backup.json", "save.json")
+                print("Backup wiederhergestellt")
+            except:
+                print("Backup konnte nicht wiederhergestellt werden")
+
+
+def load_save():
+    """
+    Lädt die gespeicherten Daten
+    """
+    try:
+        if os.path.exists("save.json"):
+            with open("save.json", "r", encoding="utf-8") as f:
+                data = json.load(f)
+            print("✓ Spieldaten geladen")
+            return data
+        else:
+            print("Keine Speicherdatei gefunden")
+            return None
+            
+    except json.JSONDecodeError:
+        print("❌ Speicherdatei ist beschädigt")
+        
+        # Backup versuchen
+        if os.path.exists("save_backup.json"):
+            try:
+                with open("save_backup.json", "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                print("✓ Backup-Datei geladen")
+                return data
+            except:
+                print("❌ Auch Backup ist beschädigt")
+        
+        return None
+        
+    except Exception as e:
+        print(f"❌ Fehler beim Laden: {e}")
+        return None
+
+
+# Beispiel für saubere Programmstruktur ohne Rekursion:
+def main():
+    """
+    Hauptprogramm - Beispiel wie es strukturiert werden könnte
+    """
+    # Initialisierung
+    status = {"level": 1, "health": 100}
+    inventar = ["schwert", "schild"]
+    inventarQa = {"schwert": 1, "schild": 1}
+    stats = {"kills": 0, "deaths": 0}
     
-    return main()
+    # Gespeicherte Daten laden falls vorhanden
+    saved_data = load_save()
+    if saved_data:
+        status = saved_data.get("status", status)
+        inventar = saved_data.get("inventar", inventar)
+        inventarQa = saved_data.get("inventarQa", inventarQa)
+        stats = saved_data.get("stats", stats)
+    
+    # Hauptspiel-Loop
+    while True:
+        print("\n=== SPIEL MENÜ ===")
+        print("1. Spielen")
+        print("2. Speichern")
+        print("3. Beenden")
+        
+        choice = input("Wähle: ")
+        
+        if choice == "1":
+            print("Spiel läuft...")
+            # Hier würde dein Spielcode stehen
+            
+        elif choice == "2":
+            save(status, inventar, inventarQa, stats)
+            
+        elif choice == "3":
+            # Vor dem Beenden speichern?
+            save_before_exit = input("Vor dem Beenden speichern? (j/n): ")
+            if save_before_exit.lower() == 'j':
+                save(status, inventar, inventarQa, stats)
+            break
+            
+        else:
+            print("Ungültige Eingabe")
+
+
+if __name__ == "__main__":
+    main()
 
 def main():
     T = input("mainmenu:")
