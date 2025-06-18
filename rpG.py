@@ -9,7 +9,7 @@ temp = 0
 print ("""
   _   __              _     _______     _______     ______  
  / |_[  |            / |_  |_   __ \   |_   __ \  .' ___  | 
-`| |-'| |--.   ,--. `| |-'   | |__) |    | |__) |/ .'   \_| 
+`| |-'| |--.   ,--. `| |-'   | |__) |    | |__) |/ .'   \_|
  | |  | .-. | `'_\ : | |     |  __ /     |  ___/ | |   ____ 
  | |, | | | | // | |,| |,   _| |  \ \_  _| |_    \ `.___]  |
  \__/[___]|__]\'-;__/\__/  |____| |___||_____|    `._____.' 
@@ -146,7 +146,7 @@ inventarQa = {
 }
 
 RecipesHidden = {
-    "stick+stick" : (f"club {club}")
+    "stick+stick" : ("club")
 }
 
 class NPC:
@@ -201,7 +201,7 @@ def main():
         return world()  #niy
     if (T == 's'):
         T = None
-        return save()
+        return save(status, inventar, inventarQa, stats)
     if (T == 'l'):
         T = None
         return load()
@@ -253,12 +253,11 @@ def kombinieren():
     if f'{temp}' in RecipesHidden:
         inventarQa[Z1] = inventarQa[Z1] - 1
         inventarQa[Z2] = inventarQa[Z2] - 1
-        print (RecipesHidden[temp])
+        print (RecipesHidden[temp]+{RecipesHidden[temp]})
         inventarQa[RecipesHidden[temp]] = inventarQa[RecipesHidden[temp]] + 1
         return kombinieren()   
     if f'{temp}' not in RecipesHidden:
         print ("not valid")
         return kombinieren()
-
 
 inventarui()
