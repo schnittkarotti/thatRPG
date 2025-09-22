@@ -32,7 +32,6 @@ class gun:
         return (f'{gun.magwell}+{gun.damage}+{gun.caliber}')
 
 ar15 = gun(1, "ar", 200, 500, 2, 100, 5.56, 500, "default")
-
 class NotGun:
     def __init__(NotGun, stacksize, speed, atk, block, hands, rp, descrip):
         NotGun.stacksize = stacksize
@@ -252,7 +251,7 @@ def kombinieren():
     if f'{temp}' in RecipesHidden:
         inventarQa[Z1] = inventarQa[Z1] - 1
         inventarQa[Z2] = inventarQa[Z2] - 1
-        print (RecipesHidden[temp]+{RecipesHidden[temp]})
+        print (temp+"="+RecipesHidden[temp])
         inventarQa[RecipesHidden[temp]] = inventarQa[RecipesHidden[temp]] + 1
         return kombinieren()   
     if f'{temp}' not in RecipesHidden:
