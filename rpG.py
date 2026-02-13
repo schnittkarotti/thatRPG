@@ -148,6 +148,8 @@ RecipesHidden = {
     "stick+stick" : ("club")
 }
 
+WeaponEquip = ("none")
+ArmorEquip = ("none")
 
 class NPC:
     def __init__(NPC, HP, aggro, like, power):
