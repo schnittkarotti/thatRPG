@@ -84,7 +84,7 @@ class crafting:
 
 stick = crafting(20, "kleines stück holz")
 
-apfelTX = str("""                                                  
+apfelTX = str("""                                                   
                                                   
                                                   
                                                   
@@ -148,6 +148,7 @@ RecipesHidden = {
     "stick+stick" : ("club")
 }
 
+
 class NPC:
     def __init__(NPC, HP, aggro, like, power):
         NPC.HP = HP
@@ -204,9 +205,30 @@ def main():
         T = None
         return load()
 
+def equipment():
+    T = input("Armor; weapon")
+    if T == "w":
+        T = 0
+        print ("please select weapon:")
+        print (inventar.keys)
+        T = input()
+        if f'{T}' in inventar:
+            WeaponEquip = T
+        else:
+            print ("You dont have this")
+    if T == "a":
+        T = 0
+        print ("please select armor:")
+        print (inventar.keys)
+        T = input()
+        if f'{T}' in inventar:
+            ArmorEquip = T
+        else:
+            print ("You dont have this")
+
 def inventarui():
     print (inventar.keys())
-    T = input("c oder q:")
+    T = input("c; e oder q:")
     if (T == 'c'):
         T = 0
         return crafting()
@@ -259,3 +281,4 @@ def kombinieren():
         return kombinieren()
 
 inventarui()
+
