@@ -206,8 +206,8 @@ def main():
         return load()
 
 def equipment():
-    print WeaponEquip
-    print ArmorEquip
+    print (WeaponEquip)
+    print (ArmorEquip)
     T = input("Armor; weapon")
     if T == "w":
         T = 0
