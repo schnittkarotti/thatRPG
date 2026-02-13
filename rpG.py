@@ -210,21 +210,31 @@ def equipment():
     if T == "w":
         T = 0
         print ("please select weapon:")
-        print (inventar.keys)
+        print (inventar.keys())
         T = input()
         if f'{T}' in inventar:
             WeaponEquip = T
+            print (T + " is equipped")
+            T = 0
+            return inventarui()
         else:
             print ("You dont have this")
+            T = 0
+            return inventarui
     if T == "a":
         T = 0
         print ("please select armor:")
-        print (inventar.keys)
+        print (inventar.keys())
         T = input()
         if f'{T}' in inventar:
+            print (T + " is equipped")
             ArmorEquip = T
+            T = 0
+            return inventarui
         else:
             print ("You dont have this")
+            T = 0
+            return inventarui()
 
 def inventarui():
     print (inventar.keys())
